@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Soliamman Finance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    :root{
+      --gold:#c9922a;--gold-light:#e8b84b;
+      --dark:#0f0c07;--dark2:#1a1508;
+      --cream:#f5edd8;--cream2:#ede0c0;--muted:#7a6a40;
+      --bg1:#ffffff;--bg2:#f5f5f3;--bg3:#eeece8;
+      --bgi:#e6f1fb;--bgs:#eaf3de;--bgd:#fcebeb;--bgw:#faeeda;
+      --t1:#1a1a1a;--t2:#5f5e5a;--t3:#888780;
+      --ti:#185fa5;--ts:#3b6d11;--td:#a32d2d;--tw:#854f0b;
+      --b3:rgba(0,0,0,0.12);--b2:rgba(0,0,0,0.22);--b1:rgba(0,0,0,0.35);
+      --bd:rgba(163,45,45,0.5);
+    }
+    body{font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+    #website-page{display:block;}
+    #portal-page{display:none;background:var(--bg3);min-height:100vh;}
+
+    /* ── WEBSITE ── */
+    .sw{background:var(--dark);color:var(--cream);}
+    .sw::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.35;}
+    nav{position:fixed;top:0;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 4rem;background:linear-gradient(to bottom,rgba(15,12,7,0.98),transparent);border-bottom:1px solid rgba(201,146,42,0.15);}
+    .nav-logo{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:var(--gold-light);}
+    .nav-logo span{color:var(--cream);}
+    .nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
+    .nav-links a{color:var(--cream2);text-decoration:none;font-size:0.85rem;font-weight:400;letter-spacing:0.06em;text-transform:uppercase;opacity:0.8;transition:0.2s;}
+    .nav-links a:hover{opacity:1;color:var(--gold-light);}
+    .nlbtn{background:var(--gold);color:var(--dark);padding:0.48rem 1.2rem;font-size:0.8rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;border:none;cursor:pointer;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));transition:background 0.2s;}
+    .nlbtn:hover{background:var(--gold-light);}
+    .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 4rem 4rem;position:relative;overflow:hidden;}
+    .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 80% 50%,rgba(201,146,42,0.08) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 20% 80%,rgba(201,146,42,0.05) 0%,transparent 60%),linear-gradient(160deg,#0f0c07 0%,#1a1508 50%,#0f0c07 100%);}
+    .hero-orn{position:absolute;right:5%;top:50%;transform:translateY(-50%);width:400px;height:400px;opacity:0.06;}
+    .hero-tag{font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;position:relative;}
+    .hero-tag::before{content:'';width:40px;height:1px;background:var(--gold);}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,7vw,5.5rem);font-weight:900;line-height:1.05;color:var(--cream);position:relative;max-width:680px;}
+    .hero h1 em{font-style:italic;color:var(--gold-light);}
+    .hero-sub{margin-top:1.6rem;max-width:460px;font-size:1rem;line-height:1.75;color:var(--cream2);opacity:0.7;position:relative;}
+    .hero-actions{margin-top:2.5rem;display:flex;gap:1.2rem;flex-wrap:wrap;position:relative;}
+    .btn-p{background:var(--gold);color:var(--dark);padding:0.85rem 2rem;font-size:0.88rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:background 0.25s,transform 0.2s;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));}
+    .btn-p:hover{background:var(--gold-light);transform:translateY(-2px);}
+    .btn-o{border:1px solid rgba(201,146,42,0.5);color:var(--gold-light);padding:0.85rem 2rem;font-size:0.88rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;display:inline-block;background:transparent;cursor:pointer;transition:0.25s;}
+    .btn-o:hover{border-color:var(--gold-light);background:rgba(201,146,42,0.08);}
+    .hero-stats{position:relative;margin-top:4.5rem;display:flex;gap:4rem;flex-wrap:wrap;}
+    .stat-item{border-left:2px solid var(--gold);padding-left:1.2rem;}
+    .stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold-light);}
+    .stat-lbl{font-size:0.76rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:0.2rem;}
+    .divider{display:flex;align-items:center;gap:1.5rem;padding:0 4rem;margin:0.5rem 0;}
+    .divider-line{flex:1;height:1px;background:rgba(201,146,42,0.2);}
+    .divider-ico{color:var(--gold);font-size:1.2rem;}
+    .ssec{padding:5.5rem 4rem;}
+    .sec-tag{font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+    .sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:var(--cream);line-height:1.15;}
+    .sec-title em{font-style:italic;color:var(--gold-light);}
+    #services{background:var(--dark2);}
+    .sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5px;margin-top:3rem;}
+    .scard{background:rgba(201,146,42,0.04);border:1px solid rgba(201,146,42,0.12);padding:2.2rem 1.8rem;transition:0.3s;position:relative;overflow:hidden;}
+    .scard::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--gold);transition:height 0.4s;}
+    .scard:hover{background:rgba(201,146,42,0.08);border-color:rgba(201,146,42,0.3);}
+    .scard:hover::before{height:100%;}
+    .sico{font-size:1.9rem;margin-bottom:1rem;display:block;}
+    .stitle{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;color:var(--cream);margin-bottom:0.7rem;}
+    .sdesc{font-size:0.9rem;line-height:1.7;color:var(--cream2);opacity:0.65;}
+    .sbadge{display:inline-block;margin-top:1rem;padding:0.28rem 0.7rem;background:rgba(201,146,42,0.15);border:1px solid rgba(201,146,42,0.3);font-size:0.72rem;letter-spacing:0.1em;color:var(--gold-light);text-transform:uppercase;}
+    #how{background:var(--dark);}
+    .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2rem;margin-top:3rem;position:relative;}
+    .steps::before{content:'';position:absolute;top:2.5rem;left:10%;right:10%;height:1px;background:linear-gradient(to right,transparent,rgba(201,146,42,0.4),transparent);}
+    .step{text-align:center;padding:1.8rem 1.2rem;}
+    .step-num{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:rgba(201,146,42,0.15);line-height:1;margin-bottom:0.4rem;}
+    .step-ico{font-size:1.7rem;margin-bottom:0.8rem;}
+    .step-tit{font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;color:var(--cream);margin-bottom:0.5rem;}
+    .step-desc{font-size:0.86rem;line-height:1.6;color:var(--cream2);opacity:0.6;}
+    #owners{background:var(--dark2);}
+    .ogrid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:3rem;max-width:660px;}
+    .ocard{border:1px solid rgba(201,146,42,0.2);padding:1.8rem;background:linear-gradient(135deg,rgba(201,146,42,0.05),transparent);position:relative;}
+    .ocard::after{content:'✦';position:absolute;top:1rem;right:1rem;color:var(--gold);opacity:0.3;font-size:0.8rem;}
+    .oname{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--gold-light);margin-bottom:0.3rem;}
+    .orole{font-size:0.76rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
+    #contact{background:linear-gradient(160deg,var(--dark) 0%,var(--dark2) 100%);position:relative;overflow:hidden;}
+    #contact::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 80% at 80% 50%,rgba(201,146,42,0.06) 0%,transparent 70%);}
+    .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:3rem;position:relative;}
+    .citem{display:flex;align-items:flex-start;gap:1.1rem;margin-bottom:1.8rem;}
+    .cicon{width:42px;height:42px;flex-shrink:0;border:1px solid rgba(201,146,42,0.3);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+    .clbl{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.3rem;}
+    .cval{font-size:0.95rem;color:var(--cream);font-weight:500;}
+    .cval a{color:var(--cream);text-decoration:none;transition:0.2s;}
+    .cval a:hover{color:var(--gold-light);}
+    .tbox{border:1px solid rgba(201,146,42,0.2);padding:2.2rem;background:rgba(201,146,42,0.04);}
+    .tbox h3{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--cream);margin-bottom:1rem;}
+    .tlist{list-style:none;}
+    .tlist li{padding:0.55rem 0;border-bottom:1px solid rgba(201,146,42,0.1);font-size:0.88rem;color:var(--cream2);opacity:0.75;display:flex;align-items:center;gap:0.8rem;}
+    .tlist li::before{content:'✦';color:var(--gold);font-size:0.6rem;flex-shrink:0;}
+    .tlist li:last-child{border-bottom:none;}
+    footer{text-align:center;padding:2.2rem 4rem;border-top:1px solid rgba(201,146,42,0.15);font-size:0.8rem;color:var(--muted);background:var(--dark);}
+    footer strong{color:var(--gold-light);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+    .hero-tag{animation:fadeUp 0.6s ease both;}
+    .hero h1{animation:fadeUp 0.7s 0.1s ease both;}
+    .hero-sub{animation:fadeUp 0.7s 0.2s ease both;}
+    .hero-actions{animation:fadeUp 0.7s 0.3s ease both;}
+    .hero-stats{animation:fadeUp 0.7s 0.4s ease both;}
+
+    /* ── PORTAL ── */
+    .pi{width:100%;padding:8px 12px;border:0.5px solid var(--b3);border-radius:8px;background:var(--bg1);color:var(--t1);font-size:14px;outline:none;font-family:inherit;}
+    .pi:focus{border-color:var(--b1);}
+    .psel{width:100%;padding:8px 12px;border:0.5px solid var(--b3);border-radius:8px;background:var(--bg1);color:var(--t1);font-size:14px;outline:none;font-family:inherit;}
+    .pta{width:100%;padding:8px 12px;border:0.5px solid var(--b3);border-radius:8px;background:var(--bg1);color:var(--t1);font-size:14px;outline:none;font-family:inherit;resize:vertical;}
+    .pbtn{padding:9px 0;border:0.5px solid var(--b2);border-radius:8px;background:transparent;cursor:pointer;font-weight:500;font-size:14px;font-family:inherit;width:100%;color:var(--t1);transition:background 0.15s;}
+    .pbtn:hover{background:var(--bg2);}
+    .pbtn-gold{background:var(--gold);color:#0f0c07;border-color:var(--gold);font-weight:600;}
+    .pbtn-gold:hover{background:var(--gold-light);}
+    .pbtn-blue{background:var(--bgi);color:var(--ti);border-color:#b0cfe8;font-weight:600;}
+    .pbtn-blue:hover{background:#d0e6f8;}
+    .pcard{background:var(--bg1);border:0.5px solid var(--b3);border-radius:12px;padding:1.25rem;}
+    .ptab{flex:1;padding:8px 0;border:0.5px solid var(--b3);border-radius:8px;cursor:pointer;font-size:13px;font-family:inherit;transition:0.15s;}
+    .pback{border:0.5px solid var(--b3);border-radius:8px;background:transparent;padding:6px 14px;cursor:pointer;font-size:13px;font-family:inherit;color:var(--t2);}
+    .psmbtn{font-size:11px;padding:3px 10px;border:0.5px solid var(--b3);border-radius:6px;background:transparent;cursor:pointer;font-family:inherit;color:var(--t1);}
+    .pdelbtn{font-size:11px;padding:3px 10px;border:0.5px solid var(--bd);border-radius:6px;background:transparent;cursor:pointer;font-family:inherit;color:var(--td);}
+    .prow{margin-top:8px;padding:10px 12px;border:0.5px solid var(--b3);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.15s;}
+    .prow:hover{background:var(--bg2);}
+    .pmet{background:var(--bg2);border-radius:8px;padding:10px 14px;}
+    table{border-collapse:collapse;width:100%;}
+    th,td{text-align:left;padding:8px 10px;}
+    th{font-size:12px;font-weight:500;color:var(--t2);border-bottom:0.5px solid var(--b3);}
+    .tr-paid{background:var(--bgs);}
+    .tr-due{background:var(--bgd);}
+    .tr-ext{background:#f0e8fb;}
+    .lbl{font-size:12px;color:var(--t2);display:block;margin-bottom:4px;}
+    .err{font-size:12px;color:var(--td);margin-bottom:0.75rem;}
+    /* extension banner */
+    .ext-banner{background:linear-gradient(135deg,#f0e8fb,#e8d8f8);border:1px solid #c4a0e8;border-radius:10px;padding:14px 16px;margin-bottom:1rem;}
+    .ext-req-banner{background:var(--bgw);border:1px solid #e8c97a;border-radius:10px;padding:14px 16px;margin-bottom:1rem;}
+
+    @media print{
+      #website-page,#portal-page .no-print{display:none!important;}
+      #print-area{display:block!important;}
+    }
+    #print-area{display:none;}
+
+    @media(max-width:768px){
+      nav{padding:1rem 1.5rem;}
+      .nav-links{display:none;}
+      .ssec{padding:4rem 1.5rem;}
+      .hero{padding:6rem 1.5rem 3rem;}
+      .hero-stats{gap:2rem;}
+      .cgrid{grid-template-columns:1fr;gap:2rem;}
+      .ogrid{grid-template-columns:1fr;}
+      .divider{padding:0 1.5rem;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ WEBSITE ══════════════════ -->
+<div id="website-page" class="sw">
+  <nav>
+    <div class="nav-logo">Soliamman <span>Finance</span></div>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#owners">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><button class="nlbtn" onclick="showPortal()">Member Login</button></li>
+    </ul>
+  </nav>
+
+  <section class="hero ssec" id="home">
+    <div class="hero-bg"></div>
+    <svg class="hero-orn" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="200" cy="200" r="180" stroke="#c9922a" stroke-width="1"/>
+      <circle cx="200" cy="200" r="140" stroke="#c9922a" stroke-width="0.5" stroke-dasharray="4 6"/>
+      <circle cx="200" cy="200" r="100" stroke="#c9922a" stroke-width="1"/>
+      <line x1="20" y1="200" x2="380" y2="200" stroke="#c9922a" stroke-width="0.5"/>
+      <line x1="200" y1="20" x2="200" y2="380" stroke="#c9922a" stroke-width="0.5"/>
+      <polygon points="200,50 230,170 350,200 230,230 200,350 170,230 50,200 170,170" stroke="#c9922a" stroke-width="0.8" fill="none"/>
+    </svg>
+    <div class="hero-tag">Trusted Local Finance Partner</div>
+    <h1>Your Money,<br/><em>Grows Here.</em></h1>
+    <p class="hero-sub">Soliamman Finance offers flexible lending solutions for individuals and shop owners — fast, fair, and rooted in trust.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-p">Get a Loan Today</a>
+      <button class="btn-o" onclick="showPortal()">Member Login</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">3%</div><div class="stat-lbl">Monthly Interest</div></div>
+      <div class="stat-item"><div class="stat-num">Daily</div><div class="stat-lbl">Collection Option</div></div>
+      <div class="stat-item"><div class="stat-num">Fast</div><div class="stat-lbl">Approvals</div></div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-ico">✦</div><div class="divider-line"></div></div>
+
+  <section id="services" class="ssec">
+    <div class="sec-tag">What We Offer</div>
+    <div class="sec-title">Our <em>Services</em></div>
+    <div class="sgrid">
+      <div class="scard"><span class="sico">🏠</span><div class="stitle">Personal Monthly Loans</div><p class="sdesc">Pay only monthly interest; principal returned at the end. Extension available if needed — just request from the owner.</p><span class="sbadge">3% Interest / Month</span></div>
+      <div class="scard"><span class="sico">🏪</span><div class="stitle">Shop / Business Loans</div><p class="sdesc">Fund your shop or small business. Repaid in easy daily installments with interest — no lump-sum stress.</p><span class="sbadge">Daily Collection</span></div>
+      <div class="scard"><span class="sico">🏡</span><div class="stitle">Secured High-Value Loans</div><p class="sdesc">For larger amounts, we accept property or land as collateral (mortgage). Get big funding with your asset as security.</p><span class="sbadge">Property / Land Security</span></div>
+    </div>
+  </section>
+
+  <section id="how" class="ssec">
+    <div class="sec-tag">Simple Process</div>
+    <div class="sec-title">How It <em>Works</em></div>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><div class="step-ico">📋</div><div class="step-tit">Apply</div><p class="step-desc">Contact us with the amount you need. No complicated paperwork.</p></div>
+      <div class="step"><div class="step-num">02</div><div class="step-ico">🤝</div><div class="step-tit">Discuss & Agree</div><p class="step-desc">We meet personally and agree on monthly or daily repayment.</p></div>
+      <div class="step"><div class="step-num">03</div><div class="step-ico">💰</div><div class="step-tit">Receive Funds</div><p class="step-desc">Once agreed, you receive your loan quickly. No long waiting.</p></div>
+      <div class="step"><div class="step-num">04</div><div class="step-ico">✅</div><div class="step-tit">Repay Easily</div><p class="step-desc">Daily for shops or monthly for personal — clear and simple.</p></div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-ico">✦</div><div class="divider-line"></div></div>
+
+  <section id="owners" class="ssec">
+    <div class="sec-tag">Behind Soliamman Finance</div>
+    <div class="sec-title">Meet the <em>Owners</em></div>
+    <p style="margin-top:1rem;color:var(--cream2);opacity:0.65;max-width:460px;font-size:0.92rem;line-height:1.7;">Family-rooted local finance built on honesty, trust, and community. Our owners are personally involved in every loan decision.</p>
+    <div class="ogrid">
+      <div class="ocard"><div class="oname">Paramanantham R</div><div class="orole">Co-Owner &amp; Partner</div></div>
+      <div class="ocard"><div class="oname">Prakash N</div><div class="orole">Co-Owner &amp; Partner</div></div>
+    </div>
+  </section>
+
+  <section id="contact" class="ssec">
+    <div class="sec-tag">Reach Us</div>
+    <div class="sec-title">Get in <em>Touch</em></div>
+    <div class="cgrid">
+      <div>
+        <div class="citem"><div class="cicon">📞</div><div><div class="clbl">Phone – Paramanantham</div><div class="cval"><a href="tel:9976099982">9976099982</a></div></div></div>
+        <div class="citem"><div class="cicon">📞</div><div><div class="clbl">Phone – Prakash</div><div class="cval"><a href="tel:9976099993">9976099993</a></div></div></div>
+        <div class="citem"><div class="cicon">📍</div><div><div class="clbl">Address</div><div class="cval">Muthur Main Road, Nanjai Uthukuli, Erode – 638104</div></div></div>
+        <div style="margin-top:2rem;"><a href="tel:9976099982" class="btn-p">Call Now to Apply</a></div>
+      </div>
+      <div class="tbox">
+        <h3>Why Choose Us?</h3>
+        <ul class="tlist">
+          <li>Locally trusted finance company</li>
+          <li>Transparent 3% monthly interest rate</li>
+          <li>Flexible daily repayment for businesses</li>
+          <li>Large loans secured against property / land</li>
+          <li>Personal service — we know our customers</li>
+          <li>Fast approval, no unnecessary delays</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 <strong>Soliamman Finance</strong>. All rights reserved.</p>
+    <p style="margin-top:0.4rem;font-size:0.74rem;">Owners: Paramanantham R &amp; Prakash N &nbsp;|&nbsp; 9976099982 / 9976099993 &nbsp;|&nbsp; Muthur Main Road, Nanjai Uthukuli, Erode – 638104</p>
+    <p style="margin-top:0.4rem;font-size:0.74rem;">Cloud storage base: <a href="https://ik.imagekit.io/doyivizek" target="_blank" style="color:var(--gold);text-decoration:underline;">https://ik.imagekit.io/doyivizek</a></p>
+  </footer>
+</div>
+
+<!-- ══════════════════ PORTAL ══════════════════ -->
+<div id="portal-page">
+  <div id="portal-root"></div>
+</div>
+
+<div id="print-area"></div>
+
+<script>
+  function showPortal(){
+    document.getElementById('website-page').style.display='none';
+    document.getElementById('portal-page').style.display='block';
+    window.scrollTo(0,0);
+  }
+  function showWebsite(){
+    document.getElementById('portal-page').style.display='none';
+    document.getElementById('website-page').style.display='block';
+    window.scrollTo(0,0);
+  }
+  function printReceipt(html){
+    const w=window.open('','_blank','width=600,height=700');
+    w.document.write(html);
+    w.document.close();
+    w.focus();
+    setTimeout(()=>{w.print();},400);
+  }
+</script>
+
+<script type="text/babel">
+const{useState,useEffect}=React;
+
+const OWNER_CREDS=[
+  {username:'paramanantham',password:'param123',name:'Paramanantham R',role:'owner'},
+  {username:'prakash',password:'prakash123',name:'Prakash N',role:'owner'},
+];
+const RATE=0.03;
+const TODAY=new Date().toISOString().split('T')[0];
+
+/* ── CALCULATIONS ── */
+function calcDaily(p,d){
+  const interest=+(p*RATE).toFixed(2);
+  const total=+(p+interest).toFixed(2);
+  const daily=+(total/d).toFixed(2);
+  return{interest,total,daily};
+}
+function calcMonthly(p,m){
+  const mi=+(p*RATE).toFixed(2);
+  const ti=+(mi*m).toFixed(2);
+  const total=+(p+ti).toFixed(2);
+  const monthly=+(total/m).toFixed(2);
+  return{monthlyInterest:mi,totalInterest:ti,total,monthly};
+}
+
+/*
+  Monthly loan schedule logic:
+  - Every month except the last: pay INTEREST ONLY (principal*3%)
+  - Last month: pay INTEREST + full PRINCIPAL
+  - Extensions add more interest-only months + a new final month
+  - loan.extensions = [{months, approvedDate, approvedBy}]
+*/
+function getTotalMonths(loan){
+  const base=loan.duration;
+  const extra=(loan.extensions||[]).reduce((s,e)=>s+e.months,0);
+  return base+extra;
+}
+
+function genSchedule(loan){
+  const s=[];
+  const start=new Date(loan.startDate);
+  const mi=+(loan.principal*RATE).toFixed(2);
+
+  if(loan.type==='daily'){
+    const{daily}=calcDaily(loan.principal,loan.duration);
+    for(let i=0;i<loan.duration;i++){
+      const d=new Date(start);
+      d.setDate(d.getDate()+i);
+      s.push({
+        id:i+1,
+        dueDate:d.toISOString().split('T')[0],
+        amount:daily,
+        paid:loan.payments?.[i]||false,
+        paidDate:loan.paymentDates?.[i]||null,
+        note:'Daily Installment',
+        isExtension:false,
+        isPrincipalMonth:false,
+      });
+    }
+  } else {
+    // Monthly interest-only + principal at end
+    const totalMonths=getTotalMonths(loan);
+    // Build extension segment boundaries
+    const extBreaks=[];
+    let acc=loan.duration;
+    for(const ext of(loan.extensions||[])){
+      extBreaks.push({from:acc,to:acc+ext.months,ext});
+      acc+=ext.months;
+    }
+
+    for(let i=0;i<totalMonths;i++){
+      const d=new Date(start);
+      d.setMonth(d.getMonth()+i+1);
+      const isLast=i===totalMonths-1;
+      const amount=isLast?+(mi+loan.principal).toFixed(2):mi;
+
+      // Determine if this slot is part of an extension
+      const extInfo=extBreaks.find(e=>i>=e.from&&i<e.to);
+      const isExt=!!extInfo;
+
+      s.push({
+        id:i+1,
+        dueDate:d.toISOString().split('T')[0],
+        amount,
+        paid:loan.payments?.[i]||false,
+        paidDate:loan.paymentDates?.[i]||null,
+        note:isLast
+          ? (isExt?'Extended — Interest + Full Principal':'Interest + Full Principal')
+          : (isExt?'Extended — Interest Only':'Interest Only'),
+        isExtension:isExt,
+        isPrincipalMonth:isLast,
+        extMonths:extInfo?.ext?.months,
+      });
+    }
+  }
+  return s;
+}
+
+/* ── EXTENSION HELPERS ── */
+// Check if a monthly loan needs extension option
+// (all interest months paid, last slot not yet paid)
+function loanNeedsExtension(loan){
+  if(loan.type==='daily')return false;
+  const sch=genSchedule(loan);
+  if(sch.length===0)return false;
+  const last=sch[sch.length-1];
+  // All non-last slots paid, last slot not paid, last due date reached or passed
+  const interestAllPaid=sch.slice(0,-1).every(r=>r.paid);
+  return interestAllPaid&&!last.paid&&last.dueDate<=TODAY;
+}
+
+// Has a pending extension request
+function hasPendingExtension(loan){
+  return !!(loan.extensionRequest&&loan.extensionRequest.status==='pending');
+}
+
+/* ── STORAGE — ImageKit Cloud ── */
+// ImageKit config — replace IK_PRIVATE_KEY with your actual private key from ImageKit dashboard
+const IK_PUBLIC_KEY  = 'public_5lNNmwIkRHkuXxs0YD/l8Ct2T0k=';   // ← your ImageKit public key
+const IK_PRIVATE_KEY = 'private_FCEhraYKCU4d2TcpB/YWz24WNqE=';    // ← paste private key from dashboard
+const IK_URL_ENDPOINT = 'https://ik.imagekit.io/doyivizek';
+const IK_UPLOAD_API   = 'https://upload.imagekit.io/api/v1/files/upload';
+const IK_API_BASE     = 'https://api.imagekit.io/v1';
+const IK_DATA_FILE    = 'sf_data_v3.json';   // permanent filename in ImageKit
+
+// Basic-auth header for ImageKit REST API (private key : empty password)
+function ikAuthHeader(){
+  return 'Basic ' + btoa(IK_PRIVATE_KEY + ':');
+}
+
+// ── Session (always localStorage — session is per-browser, not cloud data) ──
+function getSession(){
+  try{const s=localStorage.getItem('sf_session');return s?JSON.parse(s):null;}catch{return null;}
+}
+function setSession(user){
+  localStorage.setItem('sf_session',JSON.stringify({...user,loginTime:new Date().toISOString()}));
+}
+function clearSession(){
+  localStorage.removeItem('sf_session');
+}
+
+// ── Find the existing file's fileId in ImageKit (needed for overwrite) ──
+async function ikFindFile(){
+  try{
+    const res = await fetch(
+      `${IK_API_BASE}/files?name=${IK_DATA_FILE}&path=/soliamman`,
+      { headers:{ Authorization: ikAuthHeader() } }
+    );
+    if(!res.ok) return null;
+    const list = await res.json();
+    return list && list.length > 0 ? list[0] : null;
+  }catch(e){
+    console.warn('ImageKit file search failed:', e);
+    return null;
+  }
+}
+
+// ── Load data: fetch JSON file from ImageKit CDN ──
+async function loadData(){
+  // Try ImageKit CDN (cached, fast, permanent)
+  try{
+    const cdnUrl = `${IK_URL_ENDPOINT}/soliamman/${IK_DATA_FILE}?t=${Date.now()}`;
+    const res = await fetch(cdnUrl);
+    if(res.ok){
+      const data = await res.json();
+      if(Array.isArray(data)){
+        // Mirror to localStorage as offline cache
+        try{ localStorage.setItem('sf_data', JSON.stringify(data)); }catch{}
+        return data;
+      }
+    }
+  }catch(e){
+    console.warn('ImageKit CDN load failed:', e);
+  }
+
+  // Fallback: localStorage cache
+  try{
+    const local = localStorage.getItem('sf_data');
+    if(local) return JSON.parse(local);
+  }catch{}
+
+  return [];
+}
+
+// ── Save data: upload JSON to ImageKit (overwrites the same file permanently) ──
+async function saveData(customers){
+  const jsonStr = JSON.stringify(customers, null, 2);
+  const blob = new Blob([jsonStr], { type:'application/json' });
+
+  // Build multipart form
+  const form = new FormData();
+  form.append('file', blob, IK_DATA_FILE);
+  form.append('fileName', IK_DATA_FILE);
+  form.append('folder', '/soliamman');
+  form.append('useUniqueFileName', 'false');   // keeps same filename → permanent URL
+  form.append('overwriteFile', 'true');        // overwrite instead of creating a new file
+
+  let saved = false;
+
+  try{
+    const res = await fetch(IK_UPLOAD_API, {
+      method: 'POST',
+      headers: { Authorization: ikAuthHeader() },
+      body: form,
+    });
+
+    if(res.ok){
+      saved = true;
+      console.log('✅ Data saved to ImageKit cloud permanently.');
+    } else {
+      const err = await res.text();
+      console.warn('ImageKit upload failed:', res.status, err);
+    }
+  }catch(e){
+    console.warn('ImageKit upload error:', e);
+  }
+
+  // Always mirror to localStorage as offline backup
+  try{ localStorage.setItem('sf_data', jsonStr); }catch{}
+
+  if(!saved){
+    console.warn('⚠️ Cloud save failed — data saved locally as fallback. Check your IK_PRIVATE_KEY.');
+  }
+  return saved;
+}
+
+/* ── BADGE ── */
+function Badge({children,color='gray'}){
+  const m={green:{bg:'#EAF3DE',c:'#3B6D11'},red:{bg:'#FCEBEB',c:'#A32D2D'},amber:{bg:'#FAEEDA',c:'#854F0B'},blue:{bg:'#E6F1FB',c:'#185FA5'},gray:{bg:'#F1EFE8',c:'#5F5E5A'},purple:{bg:'#F0E8FB',c:'#6B21A8'}};
+  const x=m[color]||m.gray;
+  return<span style={{background:x.bg,color:x.c,fontSize:11,padding:'2px 9px',borderRadius:20,fontWeight:500,whiteSpace:'nowrap'}}>{children}</span>;
+}
+
+/* ── TODAY COLLECTIONS ── */
+function TodayCollections({customers}){
+  const due=[];
+  customers.forEach(c=>{
+    (c.loans||[]).forEach(loan=>{
+      const sch=genSchedule(loan);
+      const todaySlot=sch.find(r=>r.dueDate===TODAY&&!r.paid);
+      if(todaySlot) due.push({customer:c,loan,slot:todaySlot});
+    });
+  });
+  const overdue=[];
+  customers.forEach(c=>{
+    (c.loans||[]).forEach(loan=>{
+      const sch=genSchedule(loan);
+      const od=sch.filter(r=>r.dueDate<TODAY&&!r.paid);
+      if(od.length) overdue.push({customer:c,loan,count:od.length,amount:od.reduce((s,x)=>s+x.amount,0)});
+    });
+  });
+
+  return(
+    <div style={{marginBottom:'1.5rem'}}>
+      <div style={{fontWeight:500,fontSize:14,marginBottom:10}}>📅 Today's Collections — {TODAY}</div>
+      {due.length===0&&overdue.length===0?(
+        <div style={{background:'var(--bgs)',border:'0.5px solid #b6d9a0',borderRadius:8,padding:'10px 14px',fontSize:13,color:'var(--ts)'}}>✅ No collections due today.</div>
+      ):(
+        <>
+          {due.length>0&&(
+            <div style={{background:'var(--bgw)',border:'0.5px solid #e8c97a',borderRadius:8,padding:'10px 14px',marginBottom:8}}>
+              <div style={{fontSize:12,fontWeight:500,color:'var(--tw)',marginBottom:6}}>Due Today ({due.length})</div>
+              {due.map((x,i)=>(
+                <div key={i} style={{display:'flex',justifyContent:'space-between',fontSize:13,padding:'4px 0',borderBottom:i<due.length-1?'0.5px solid rgba(0,0,0,0.07)':'none'}}>
+                  <span>{x.customer.name} <span style={{color:'var(--t3)',fontSize:11}}>({x.customer.phone})</span></span>
+                  <span style={{fontWeight:500}}>₹{x.slot.amount}</span>
+                </div>
+              ))}
+              <div style={{marginTop:8,fontSize:12,fontWeight:600,color:'var(--tw)',textAlign:'right'}}>Total: ₹{due.reduce((s,x)=>s+x.slot.amount,0).toFixed(2)}</div>
+            </div>
+          )}
+          {overdue.length>0&&(
+            <div style={{background:'var(--bgd)',border:'0.5px solid #e8a0a0',borderRadius:8,padding:'10px 14px'}}>
+              <div style={{fontSize:12,fontWeight:500,color:'var(--td)',marginBottom:6}}>⚠ Overdue Loans ({overdue.length})</div>
+              {overdue.map((x,i)=>(
+                <div key={i} style={{display:'flex',justifyContent:'space-between',fontSize:13,padding:'4px 0',borderBottom:i<overdue.length-1?'0.5px solid rgba(0,0,0,0.07)':'none'}}>
+                  <span>{x.customer.name} <span style={{color:'var(--t3)',fontSize:11}}>({x.count} payments)</span></span>
+                  <span style={{fontWeight:500,color:'var(--td)'}}>₹{x.amount.toFixed(2)}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+/* ── EXTENSION REQUESTS PANEL (OWNER) ── */
+function ExtensionRequests({customers,onApprove,onReject}){
+  const[approveMonths,setApproveMonths]=useState({});
+  const requests=[];
+  customers.forEach(c=>{
+    (c.loans||[]).forEach(loan=>{
+      if(loan.extensionRequest&&loan.extensionRequest.status==='pending'){
+        requests.push({customer:c,loan});
+      }
+    });
+  });
+  if(requests.length===0)return null;
+  return(
+    <div style={{marginBottom:'1.25rem'}}>
+      <div style={{fontWeight:500,fontSize:14,marginBottom:8,color:'#6B21A8'}}>🔔 Extension Requests ({requests.length})</div>
+      {requests.map(({customer,loan},i)=>{
+        const mi=+(loan.principal*RATE).toFixed(2);
+        const key=loan.id;
+        return(
+          <div key={i} className="ext-req-banner">
+            <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',flexWrap:'wrap',gap:8}}>
+              <div>
+                <div style={{fontWeight:600,fontSize:14}}>{customer.name} <span style={{fontSize:11,color:'var(--t3)'}}>({customer.phone})</span></div>
+                <div style={{fontSize:12,color:'var(--t2)',marginTop:2}}>
+                  Loan ₹{loan.principal.toLocaleString()} · Requested on {loan.extensionRequest.requestedDate}
+                </div>
+                {loan.extensionRequest.reason&&<div style={{fontSize:12,color:'var(--t2)',marginTop:4,fontStyle:'italic'}}>"{loan.extensionRequest.reason}"</div>}
+                <div style={{fontSize:12,marginTop:4,color:'var(--ts)'}}>Monthly Interest: ₹{mi}/month</div>
+              </div>
+              <div style={{display:'flex',gap:8,alignItems:'center',flexShrink:0}}>
+                <div>
+                  <div style={{fontSize:11,color:'var(--t2)',marginBottom:3}}>Approve for (months)</div>
+                  <input
+                    className="pi"
+                    type="number"
+                    min="1"
+                    max="24"
+                    placeholder="e.g. 3"
+                    value={approveMonths[key]||''}
+                    onChange={e=>setApproveMonths(prev=>({...prev,[key]:e.target.value}))}
+                    style={{width:90}}
+                  />
+                </div>
+                <button
+                  className="pbtn pbtn-gold"
+                  style={{width:'auto',padding:'6px 14px',fontSize:12,marginTop:16}}
+                  onClick={()=>{
+                    const m=parseInt(approveMonths[key]);
+                    if(!m||m<1){alert('Enter number of months to extend.');return;}
+                    onApprove(customer.id,loan.id,m);
+                    setApproveMonths(prev=>({...prev,[key]:''}));
+                  }}
+                >
+                  ✓ Approve
+                </button>
+                <button
+                  className="pbtn"
+                  style={{width:'auto',padding:'6px 14px',fontSize:12,marginTop:16,color:'var(--td)',borderColor:'var(--bd)'}}
+                  onClick={()=>onReject(customer.id,loan.id)}
+                >
+                  ✕ Reject
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ── EDIT CUSTOMER MODAL ── */
+function EditCustomerModal({customer,onSave,onClose}){
+  const[name,setName]=useState(customer.name);
+  const[phone,setPhone]=useState(customer.phone);
+  const[address,setAddress]=useState(customer.address||'');
+  return(
+    <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.4)',zIndex:1000,display:'flex',alignItems:'center',justifyContent:'center',padding:16}}>
+      <div className="pcard" style={{width:'100%',maxWidth:400}}>
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'1.2rem'}}>
+          <div style={{fontWeight:500,fontSize:15}}>Edit Customer</div>
+          <button onClick={onClose} style={{background:'none',border:'none',cursor:'pointer',fontSize:18,color:'var(--t2)'}}>✕</button>
+        </div>
+        <label className="lbl">Full Name</label>
+        <input className="pi" value={name} onChange={e=>setName(e.target.value)} style={{marginBottom:'0.75rem'}}/>
+        <label className="lbl">Phone</label>
+        <input className="pi" value={phone} onChange={e=>setPhone(e.target.value)} style={{marginBottom:'0.75rem'}}/>
+        <label className="lbl">Address</label>
+        <input className="pi" value={address} onChange={e=>setAddress(e.target.value)} style={{marginBottom:'1rem'}}/>
+        <div style={{display:'flex',gap:8}}>
+          <button className="pbtn" onClick={onClose} style={{flex:1}}>Cancel</button>
+          <button className="pbtn pbtn-gold" onClick={()=>onSave({name,phone,address})} style={{flex:1}}>Save</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── PAYMENT TABLE ── */
+function PaymentTable({loan,isOwner,onTogglePaid,onClose,customerData,onRequestExtension}){
+  const[showExtForm,setShowExtForm]=useState(false);
+  const[extReason,setExtReason]=useState('');
+  const schedule=genSchedule(loan);
+  const paid=schedule.filter(x=>x.paid).length;
+  const remaining=+(schedule.filter(x=>!x.paid).reduce((s,x)=>s+x.amount,0)).toFixed(2);
+  const mi=+(loan.principal*RATE).toFixed(2);
+  const totalMonths=getTotalMonths(loan);
+  const totalInterest=+(mi*totalMonths).toFixed(2);
+  const totalPayable=+(loan.principal+totalInterest).toFixed(2);
+
+  const needsExt=!isOwner&&loanNeedsExtension(loan);
+  const pendingExt=hasPendingExtension(loan);
+  const hasExtensions=(loan.extensions||[]).length>0;
+
+  function handlePrint(){
+    const paidRows=schedule.filter(x=>x.paid);
+    const html=`
+      <html><head><title>Soliamman Finance – Receipt</title>
+      <style>
+        body{font-family:Arial,sans-serif;padding:24px;color:#111;max-width:600px;margin:0 auto;}
+        h2{color:#c9922a;margin-bottom:4px;}
+        .sub{color:#666;font-size:13px;margin-bottom:20px;}
+        table{width:100%;border-collapse:collapse;margin-top:12px;}
+        th{background:#f5f0e0;padding:7px 10px;text-align:left;font-size:13px;}
+        td{padding:7px 10px;border-bottom:1px solid #eee;font-size:13px;}
+        .info{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+        .info-item{background:#f9f7f2;padding:8px 12px;border-radius:6px;}
+        .info-label{font-size:11px;color:#888;}
+        .info-val{font-weight:600;font-size:14px;}
+        .footer{margin-top:24px;font-size:11px;color:#999;text-align:center;border-top:1px solid #eee;padding-top:12px;}
+        .ext-row{background:#f0e8fb;}
+      </style></head><body>
+      <h2>Soliamman Finance</h2>
+      <div class="sub">Muthur Main Road, Nanjai Uthukuli, Erode – 638104 | 9976099982 / 9976099993</div>
+      <div class="info">
+        <div class="info-item"><div class="info-label">Customer</div><div class="info-val">${loan.customerName}</div></div>
+        <div class="info-item"><div class="info-label">Phone</div><div class="info-val">${customerData?.phone||'—'}</div></div>
+        <div class="info-item"><div class="info-label">Principal</div><div class="info-val">₹${loan.principal.toLocaleString()}</div></div>
+        <div class="info-item"><div class="info-label">Type</div><div class="info-val">Monthly — ${totalMonths} months${hasExtensions?' (incl. extension)':''}</div></div>
+        <div class="info-item"><div class="info-label">Monthly Interest</div><div class="info-val">₹${mi}</div></div>
+        <div class="info-item"><div class="info-label">Total Payable</div><div class="info-val">₹${totalPayable.toLocaleString()}</div></div>
+        <div class="info-item"><div class="info-label">Paid</div><div class="info-val">${paid}/${totalMonths}</div></div>
+        <div class="info-item"><div class="info-label">Remaining</div><div class="info-val">₹${remaining}</div></div>
+        ${loan.collateral?`<div class="info-item" style="grid-column:1/-1"><div class="info-label">Collateral</div><div class="info-val">${loan.collateral}</div></div>`:''}
+      </div>
+      <table><thead><tr><th>#</th><th>Due Date</th><th>Amount</th><th>Note</th><th>Paid On</th></tr></thead><tbody>
+      ${paidRows.map(r=>`<tr${r.isExtension?' class="ext-row"':''}><td>${r.id}</td><td>${r.dueDate}</td><td>₹${r.amount}</td><td>${r.note}</td><td>${r.paidDate||'—'}</td></tr>`).join('')}
+      </tbody></table>
+      <div class="footer">Printed on ${TODAY} | Soliamman Finance – Trusted Local Lender</div>
+      </body></html>`;
+    printReceipt(html);
+  }
+
+  function handleRequestExt(e){
+    e.preventDefault();
+    onRequestExtension(loan.id,extReason);
+    setShowExtForm(false);
+    setExtReason('');
+  }
+
+  return(
+    <div style={{minHeight:'100vh',background:'var(--bg3)',padding:16}}>
+      <div style={{maxWidth:800,margin:'0 auto'}}>
+        <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:'1.2rem',flexWrap:'wrap'}}>
+          <button className="pback" onClick={onClose}>← Back</button>
+          <div style={{flex:1}}>
+            <div style={{fontWeight:500,fontSize:15}}>{loan.customerName}</div>
+            <div style={{fontSize:12,color:'var(--t2)'}}>
+              Loan #{loan.id?.slice(-6)} · Started {loan.startDate} · Monthly (Interest-Only)
+              {hasExtensions&&<span style={{color:'#6B21A8'}}> · Extended {(loan.extensions||[]).reduce((s,e)=>s+e.months,0)}m</span>}
+            </div>
+          </div>
+          {isOwner&&<button className="psmbtn" onClick={handlePrint}>🖨 Print Receipt</button>}
+        </div>
+
+        {/* Collateral */}
+        {loan.collateral&&(
+          <div style={{background:'var(--bgw)',border:'0.5px solid #e8c97a',borderRadius:8,padding:'10px 14px',marginBottom:'1rem',fontSize:13}}>
+            🏠 <strong>Collateral:</strong> {loan.collateral}
+          </div>
+        )}
+
+        {/* Extension history */}
+        {hasExtensions&&(
+          <div className="ext-banner" style={{marginBottom:'1rem'}}>
+            <div style={{fontSize:12,fontWeight:600,color:'#6B21A8',marginBottom:6}}>🔄 Extension History</div>
+            {(loan.extensions||[]).map((ext,i)=>(
+              <div key={i} style={{fontSize:12,color:'#555',marginTop:4}}>
+                Extension {i+1}: +{ext.months} month{ext.months>1?'s':''} — approved by {ext.approvedBy} on {ext.approvedDate}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Extension request for customer */}
+        {!isOwner&&pendingExt&&(
+          <div className="ext-banner">
+            <div style={{fontSize:13,fontWeight:500,color:'#6B21A8'}}>⏳ Extension Request Pending</div>
+            <div style={{fontSize:12,color:'#555',marginTop:4}}>Your extension request is awaiting owner approval. You'll be notified once it's processed.</div>
+          </div>
+        )}
+
+        {!isOwner&&needsExt&&!pendingExt&&(
+          <div className="ext-banner">
+            <div style={{fontWeight:600,fontSize:13,color:'#6B21A8',marginBottom:6}}>📋 Principal Due — Extension Available</div>
+            <div style={{fontSize:12,color:'#555',marginBottom:10}}>
+              All interest payments are complete. The full principal of ₹{loan.principal.toLocaleString()} is now due. If you need more time, you can request an extension — the owner will approve additional months.
+            </div>
+            {!showExtForm?(
+              <button className="pbtn pbtn-blue" style={{width:'auto',padding:'7px 18px',fontSize:13}} onClick={()=>setShowExtForm(true)}>
+                📩 Request Extension
+              </button>
+            ):(
+              <form onSubmit={handleRequestExt}>
+                <label className="lbl" style={{marginTop:4}}>Reason for extension (optional)</label>
+                <textarea className="pta" rows={2} value={extReason} onChange={e=>setExtReason(e.target.value)} placeholder="e.g. Need 3 more months to arrange the principal amount..." style={{marginBottom:8}}/>
+                <div style={{display:'flex',gap:8}}>
+                  <button type="button" className="pbtn" style={{flex:1,fontSize:13}} onClick={()=>setShowExtForm(false)}>Cancel</button>
+                  <button type="submit" className="pbtn pbtn-blue" style={{flex:1,fontSize:13}}>Send Request →</button>
+                </div>
+              </form>
+            )}
+          </div>
+        )}
+
+        {/* Summary metrics */}
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(115px,1fr))',gap:8,marginBottom:'1.2rem'}}>
+          {[
+            ['Principal',`₹${loan.principal.toLocaleString()}`],
+            ['Monthly Interest',`₹${mi}`],
+            ['Total Months',`${totalMonths}${hasExtensions?` (+ext)`:''}` ],
+            ['Total Interest',`₹${totalInterest}`],
+            ['Total Payable',`₹${totalPayable.toLocaleString()}`],
+            ['Paid',`${paid}/${totalMonths}`],
+            ['Remaining',`₹${remaining}`],
+          ].map(([l,v])=>(
+            <div key={l} className="pmet">
+              <div style={{fontSize:11,color:'var(--t2)',marginBottom:2}}>{l}</div>
+              <div style={{fontWeight:500,fontSize:13}}>{v}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Schedule table */}
+        <div className="pcard">
+          <div style={{fontSize:13,fontWeight:500,marginBottom:'0.8rem'}}>
+            Payment Schedule &nbsp;
+            <span style={{fontSize:11,color:'var(--t2)',fontWeight:400}}>
+              ₹{mi}/month interest · Principal ₹{loan.principal.toLocaleString()} on final month
+            </span>
+          </div>
+          <div style={{overflowX:'auto'}}>
+            <table style={{tableLayout:'fixed',minWidth:500}}>
+              <thead>
+                <tr>
+                  <th style={{width:38}}>#</th>
+                  <th>Due Date</th>
+                  <th>Amount</th>
+                  <th>Note</th>
+                  <th>Status</th>
+                  {isOwner&&<th style={{width:110}}>Action</th>}
+                </tr>
+              </thead>
+              <tbody>
+                {schedule.map(row=>{
+                  const overdue=!row.paid&&row.dueDate<TODAY;
+                  return(
+                    <tr key={row.id} className={row.paid?'tr-paid':row.isExtension&&!row.paid?'tr-ext':overdue?'tr-due':''}>
+                      <td style={{color:'var(--t3)',fontSize:12}}>{row.id}</td>
+                      <td style={{fontSize:13}}>{row.dueDate}</td>
+                      <td style={{fontWeight:500,fontSize:13}}>₹{row.amount}</td>
+                      <td style={{fontSize:11,color:'var(--t2)'}}>{row.note}{row.isExtension&&<span style={{marginLeft:4,color:'#6B21A8',fontWeight:500}}>🔄</span>}</td>
+                      <td>
+                        {row.paid?<Badge color="green">Paid {row.paidDate?`(${row.paidDate})`:''}</Badge>
+                          :overdue?<Badge color="red">Overdue</Badge>
+                          :row.isExtension?<Badge color="purple">Extended</Badge>
+                          :<Badge color="amber">Pending</Badge>}
+                      </td>
+                      {isOwner&&(
+                        <td>
+                          <button className="psmbtn" onClick={()=>onTogglePaid(row.id-1)}>
+                            {row.paid?'Unmark':'✓ Mark Paid'}
+                          </button>
+                        </td>
+                      )}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── ADD LOAN FORM ── */
+function AddLoanForm({customers,onSave,onCancel}){
+  const[mode,setMode]=useState('new');
+  const[existingId,setExistingId]=useState('');
+  const[name,setName]=useState('');
+  const[phone,setPhone]=useState('');
+  const[address,setAddress]=useState('');
+  const[principal,setPrincipal]=useState('');
+  const[type,setType]=useState('daily');
+  const[duration,setDuration]=useState('');
+  const[startDate,setStartDate]=useState(TODAY);
+  const[collateral,setCollateral]=useState('');
+
+  const p=+principal;const d=+duration;
+  const mi=p?+(p*RATE).toFixed(2):0;
+  const totalInterest=p&&d?+(mi*d).toFixed(2):0;
+  const totalPayable=p&&d?+(p+totalInterest).toFixed(2):0;
+  const calcD=p&&d&&type==='daily'?calcDaily(p,d):null;
+
+  function handleSubmit(e){
+    e.preventDefault();
+    const loan={id:Date.now().toString(),principal:p,type,duration:d,startDate,collateral,payments:[],paymentDates:[],extensions:[],extensionRequest:null};
+    if(mode==='existing') onSave({mode:'existing',customerId:existingId,loan});
+    else onSave({mode:'new',customer:{id:(Date.now()+1).toString(),name,phone,address,loans:[]},loan});
+  }
+
+  return(
+    <div style={{minHeight:'100vh',background:'var(--bg3)',padding:16}}>
+      <div style={{maxWidth:540,margin:'0 auto'}}>
+        <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:'1.2rem'}}>
+          <button className="pback" onClick={onCancel}>← Back</button>
+          <div style={{fontWeight:500,fontSize:16}}>Add New Loan</div>
+        </div>
+        <div className="pcard">
+          <form onSubmit={handleSubmit}>
+            <div style={{display:'flex',gap:8,marginBottom:'1.25rem'}}>
+              {['new','existing'].map(m=>(
+                <button key={m} type="button" className="ptab" onClick={()=>setMode(m)}
+                  style={{background:mode===m?'var(--bgi)':'transparent',color:mode===m?'var(--ti)':'var(--t2)'}}>
+                  {m==='new'?'New Customer':'Existing Customer'}
+                </button>
+              ))}
+            </div>
+
+            {mode==='new'?(
+              <>
+                <label className="lbl">Full Name *</label>
+                <input className="pi" value={name} onChange={e=>setName(e.target.value)} required placeholder="Customer full name" style={{marginBottom:'0.75rem'}}/>
+                <label className="lbl">Phone *</label>
+                <input className="pi" value={phone} onChange={e=>setPhone(e.target.value)} required placeholder="10-digit phone number" style={{marginBottom:'0.75rem'}}/>
+                <label className="lbl">Address</label>
+                <input className="pi" value={address} onChange={e=>setAddress(e.target.value)} placeholder="Customer address" style={{marginBottom:'0.75rem'}}/>
+              </>
+            ):(
+              <>
+                <label className="lbl">Select Customer *</label>
+                <select className="psel" value={existingId} onChange={e=>setExistingId(e.target.value)} required style={{marginBottom:'0.75rem'}}>
+                  <option value="">-- Select Customer --</option>
+                  {customers.map(c=><option key={c.id} value={c.id}>{c.name} ({c.phone})</option>)}
+                </select>
+              </>
+            )}
+
+            <div style={{borderTop:'0.5px solid var(--b3)',margin:'1rem 0'}}/>
+            <div style={{fontSize:13,fontWeight:500,marginBottom:'0.75rem'}}>Loan Details</div>
+
+            <label className="lbl">Principal Amount (₹) *</label>
+            <input className="pi" type="number" value={principal} onChange={e=>setPrincipal(e.target.value)} required placeholder="e.g. 50000" style={{marginBottom:'0.75rem'}}/>
+
+            <label className="lbl">Repayment Type *</label>
+            <div style={{display:'flex',gap:8,marginBottom:'0.75rem'}}>
+              {[['daily','🏪 Daily (Shop)'],['monthly','🏠 Monthly (Personal)']].map(([t,l])=>(
+                <button key={t} type="button" className="ptab" onClick={()=>setType(t)}
+                  style={{background:type===t?'var(--bgi)':'transparent',color:type===t?'var(--ti)':'var(--t2)'}}>
+                  {l}
+                </button>
+              ))}
+            </div>
+
+            {type==='monthly'&&(
+              <div style={{background:'#f0e8fb',border:'0.5px solid #c4a0e8',borderRadius:8,padding:'8px 12px',marginBottom:'0.75rem',fontSize:12,color:'#6B21A8'}}>
+                ℹ Monthly loans: customer pays <strong>interest only</strong> each month. Full principal is due on the last month. Extension can be requested if principal isn't ready.
+              </div>
+            )}
+
+            <label className="lbl">{type==='daily'?'Number of Days *':'Number of Months *'}</label>
+            <input className="pi" type="number" value={duration} onChange={e=>setDuration(e.target.value)} required placeholder={type==='daily'?'e.g. 100':'e.g. 12'} style={{marginBottom:'0.75rem'}}/>
+
+            <label className="lbl">Start Date *</label>
+            <input className="pi" type="date" value={startDate} onChange={e=>setStartDate(e.target.value)} required style={{marginBottom:'0.75rem'}}/>
+
+            <label className="lbl">Collateral / Security (if any)</label>
+            <textarea className="pta" value={collateral} onChange={e=>setCollateral(e.target.value)} placeholder="e.g. Land document / Property at [address] — leave blank if none" rows={2} style={{marginBottom:'0.75rem'}}/>
+
+            {p>0&&d>0&&(
+              <div style={{background:'var(--bg2)',borderRadius:8,padding:'12px 14px',marginBottom:'1rem',border:'0.5px solid var(--b3)'}}>
+                <div style={{fontSize:12,fontWeight:600,marginBottom:10,color:'var(--t1)'}}>📊 Loan Calculation Summary</div>
+                <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
+                  {(type==='daily'&&calcD?[
+                    ['Principal Amount',`₹${p.toLocaleString()}`],
+                    ['Interest @ 3% (1 month)',`₹${calcD.interest}`],
+                    ['Total Payable',`₹${calcD.total.toLocaleString()}`],
+                    [`Daily Installment (÷${d} days)`,`₹${calcD.daily}`],
+                  ]:[
+                    ['Principal Amount',`₹${p.toLocaleString()}`],
+                    ['Monthly Interest @ 3%',`₹${mi}`],
+                    [`Total Interest (${d} months)`,`₹${totalInterest}`],
+                    ['Total Payable',`₹${totalPayable.toLocaleString()}`],
+                    ['Each Month Pay',`₹${mi} (interest only)`],
+                    ['Final Month Pay',`₹${+(mi+p).toFixed(2)} (interest + principal)`],
+                  ]).map(([l,v])=>(
+                    <div key={l}>
+                      <div style={{fontSize:11,color:'var(--t3)'}}>{l}</div>
+                      <div style={{fontWeight:600,fontSize:14,color:'var(--t1)'}}>{v}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            <button type="submit" className="pbtn pbtn-gold">✅ Create Loan</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── LOGIN ── */
+function LoginPage({onLogin,customers}){
+  const[tab,setTab]=useState('customer');
+  const[phone,setPhone]=useState('');
+  const[oUser,setOUser]=useState('');
+  const[oPass,setOPass]=useState('');
+  const[err,setErr]=useState('');
+
+  function handleCust(e){
+    e.preventDefault();setErr('');
+    const c=customers.find(x=>x.phone===phone.trim());
+    if(!c){setErr('No account found with this phone number. Please contact the owner.');return;}
+    setSession({role:'customer',id:c.id,name:c.name,phone:c.phone});
+    onLogin({role:'customer',id:c.id,name:c.name,phone:c.phone});
+  }
+  function handleOwner(e){
+    e.preventDefault();setErr('');
+    const o=OWNER_CREDS.find(x=>x.username===oUser&&x.password===oPass);
+    if(!o){setErr('Invalid username or password.');return;}
+    setSession({role:'owner',name:o.name,username:oUser});
+    onLogin({role:'owner',name:o.name,username:oUser});
+  }
+
+  return(
+    <div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',background:'var(--bg3)',padding:16}}>
+      <div style={{width:'100%',maxWidth:420}}>
+        <div style={{textAlign:'center',marginBottom:'1.5rem'}}>
+          <div style={{fontSize:22,fontWeight:600,color:'var(--t1)'}}>Soliamman Finance</div>
+          <div style={{fontSize:13,color:'var(--t2)',marginTop:4}}>🔒 Secure Member Portal</div>
+          <button onClick={showWebsite} style={{marginTop:10,background:'none',border:'none',cursor:'pointer',fontSize:12,color:'var(--t3)',textDecoration:'underline'}}>← Back to Website</button>
+        </div>
+        <div className="pcard">
+          <div style={{display:'flex',gap:8,marginBottom:'1.5rem'}}>
+            {['customer','owner'].map(t=>(
+              <button key={t} className="ptab" onClick={()=>{setTab(t);setErr('');}}
+                style={{background:tab===t?'var(--bgi)':'transparent',color:tab===t?'var(--ti)':'var(--t2)'}}>
+                {t==='owner'?'👤 Owner Login':'🏷 Customer Login'}
+              </button>
+            ))}
+          </div>
+          {tab==='customer'?(
+            <form onSubmit={handleCust}>
+              <label className="lbl">Registered Phone Number</label>
+              <input className="pi" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="Enter your 10-digit phone" required style={{marginBottom:'1rem'}}/>
+              {err&&<div className="err">{err}</div>}
+              <button type="submit" className="pbtn pbtn-gold">View My Account →</button>
+            </form>
+          ):(
+            <form onSubmit={handleOwner}>
+              <label className="lbl">Username</label>
+              <input className="pi" value={oUser} onChange={e=>setOUser(e.target.value)} placeholder="paramanantham / prakash" required style={{marginBottom:'0.75rem'}}/>
+              <label className="lbl">Password</label>
+              <input className="pi" type="password" value={oPass} onChange={e=>setOPass(e.target.value)} placeholder="••••••••" required style={{marginBottom:'1rem'}}/>
+              {err&&<div className="err">{err}</div>}
+              <button type="submit" className="pbtn pbtn-gold">Owner Login →</button>
+            </form>
+          )}
+        </div>
+        <div style={{textAlign:'center',fontSize:12,color:'var(--t3)',marginTop:'1.5rem',lineHeight:1.8}}>
+          Muthur Main Road, Nanjai Uthukuli, Erode – 638104<br/>
+          📞 9976099982 / 9976099993
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── OWNER DASHBOARD ── */
+function OwnerDashboard({user,customers,setCustomers,onLogout,cloudStatus,CloudBadge}){
+  const[view,setView]=useState('home');
+  const[selLoan,setSelLoan]=useState(null);
+  const[search,setSearch]=useState('');
+  const[editingCust,setEditingCust]=useState(null);
+  const[activeTab,setActiveTab]=useState('all');
+
+  const allLoans=customers.flatMap(c=>(c.loans||[]).map(l=>({...l,customerName:c.name,customerId:c.id})));
+  const activeLoans=allLoans.filter(l=>(l.payments||[]).filter(Boolean).length<getTotalMonths(l));
+  const totalP=allLoans.reduce((s,l)=>s+l.principal,0);
+  const filtered=customers.filter(c=>c.name.toLowerCase().includes(search.toLowerCase())||c.phone.includes(search));
+
+  // Count pending extension requests
+  const pendingExtCount=customers.reduce((s,c)=>s+(c.loans||[]).filter(l=>l.extensionRequest?.status==='pending').length,0);
+
+  // setCustomers from App already handles saving to ImageKit cloud
+  async function update(updated){setCustomers(updated);}
+
+  async function togglePaid(loanId,idx){
+    const updated=customers.map(c=>({...c,loans:(c.loans||[]).map(l=>{
+      if(l.id!==loanId)return l;
+      const tm=getTotalMonths(l);
+      const payments=[...(l.payments||Array(tm).fill(false))];
+      const paymentDates=[...(l.paymentDates||Array(tm).fill(null))];
+      payments[idx]=!payments[idx];
+      paymentDates[idx]=payments[idx]?TODAY:null;
+      return{...l,payments,paymentDates};
+    })}));
+    await update(updated);
+    const ul=updated.flatMap(c=>(c.loans||[]).map(l=>({...l,customerName:c.name,customerId:c.id}))).find(l=>l.id===selLoan?.id);
+    if(ul)setSelLoan(ul);
+  }
+
+  async function approveExtension(customerId,loanId,months){
+    const updated=customers.map(c=>{
+      if(c.id!==customerId)return c;
+      return{...c,loans:(c.loans||[]).map(l=>{
+        if(l.id!==loanId)return l;
+        const tm=getTotalMonths(l);
+        const newPayments=[...(l.payments||Array(tm).fill(false)),...Array(months).fill(false)];
+        const newPaymentDates=[...(l.paymentDates||Array(tm).fill(null)),...Array(months).fill(null)];
+        return{
+          ...l,
+          extensions:[...(l.extensions||[]),{months,approvedDate:TODAY,approvedBy:user.name}],
+          extensionRequest:{...l.extensionRequest,status:'approved',approvedDate:TODAY,approvedBy:user.name,months},
+          payments:newPayments,
+          paymentDates:newPaymentDates,
+        };
+      })};
+    });
+    await update(updated);
+    const ul=updated.flatMap(c=>(c.loans||[]).map(l=>({...l,customerName:c.name,customerId:c.id}))).find(l=>l.id===selLoan?.id);
+    if(ul)setSelLoan(ul);
+  }
+
+  async function rejectExtension(customerId,loanId){
+    const updated=customers.map(c=>{
+      if(c.id!==customerId)return c;
+      return{...c,loans:(c.loans||[]).map(l=>l.id!==loanId?l:{
+        ...l,extensionRequest:{...l.extensionRequest,status:'rejected',rejectedDate:TODAY}
+      })};
+    });
+    await update(updated);
+  }
+
+  async function handleAddLoan({mode,customer,customerId,loan}){
+    let updated;
+    if(mode==='new'){
+      const nc={...customer,loans:[{...loan,customerName:customer.name}]};
+      updated=[...customers,nc];
+    }else{
+      updated=customers.map(c=>c.id!==customerId?c:{...c,loans:[...(c.loans||[]),{...loan,customerName:c.name}]});
+    }
+    await update(updated);setView('home');
+  }
+
+  async function deleteCust(id){
+    if(!confirm('Delete this customer and all their loans? This cannot be undone.'))return;
+    await update(customers.filter(c=>c.id!==id));
+  }
+
+  async function saveEdit(custId,data){
+    await update(customers.map(c=>c.id!==custId?c:{...c,...data}));
+    setEditingCust(null);
+  }
+
+  if(view==='loan'&&selLoan){
+    const cData=customers.find(c=>c.id===selLoan.customerId);
+    return<PaymentTable
+      loan={selLoan} isOwner={true} customerData={cData}
+      onTogglePaid={idx=>togglePaid(selLoan.id,idx)}
+      onClose={()=>{setView('home');setSelLoan(null);}}
+    />;
+  }
+  if(view==='addLoan')return<AddLoanForm customers={customers} onSave={handleAddLoan} onCancel={()=>setView('home')}/>;
+
+  return(
+    <div style={{minHeight:'100vh',background:'var(--bg3)'}}>
+      {editingCust&&<EditCustomerModal customer={editingCust} onSave={d=>saveEdit(editingCust.id,d)} onClose={()=>setEditingCust(null)}/>}
+      <div style={{background:'var(--bg1)',borderBottom:'0.5px solid var(--b3)',padding:'12px 20px',display:'flex',alignItems:'center',justifyContent:'space-between',position:'sticky',top:0,zIndex:10}}>
+        <div>
+          <div style={{fontWeight:600,fontSize:15}}>Soliamman Finance</div>
+          <div style={{fontSize:12,color:'var(--t2)',display:'flex',alignItems:'center',gap:8}}>Owner Panel — {user.name} {CloudBadge&&<CloudBadge status={cloudStatus||'idle'}/>}</div>
+        </div>
+        <div style={{display:'flex',gap:8}}>
+          <button onClick={showWebsite} className="psmbtn">← Website</button>
+          <button onClick={()=>{clearSession();onLogout();}} className="psmbtn" style={{background:'var(--bgd)',color:'var(--td)'}}>🚪 Logout</button>
+        </div>
+      </div>
+
+      <div style={{maxWidth:840,margin:'0 auto',padding:'1.25rem 16px'}}>
+        {/* Summary */}
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(120px,1fr))',gap:8,marginBottom:'1.25rem'}}>
+          {[['Customers',customers.length,'blue'],['Total Loans',allLoans.length,'gray'],['Active',activeLoans.length,'amber'],['Deployed',`₹${totalP.toLocaleString()}`,'green']].map(([l,v,c])=>(
+            <div key={l} className="pmet" style={{borderLeft:`3px solid ${c==='blue'?'#185fa5':c==='amber'?'#c9922a':c==='green'?'#3b6d11':'#888'}`}}>
+              <div style={{fontSize:11,color:'var(--t2)',marginBottom:2}}>{l}</div>
+              <div style={{fontWeight:600,fontSize:18}}>{v}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Extension requests notification + panel */}
+        {pendingExtCount>0&&activeTab!=='extensions'&&(
+          <div style={{background:'#f0e8fb',border:'1px solid #c4a0e8',borderRadius:8,padding:'10px 14px',marginBottom:'1rem',display:'flex',alignItems:'center',justifyContent:'space-between',fontSize:13}}>
+            <span style={{color:'#6B21A8',fontWeight:500}}>🔔 {pendingExtCount} extension request{pendingExtCount>1?'s':''} awaiting approval</span>
+            <button className="psmbtn" style={{color:'#6B21A8',borderColor:'#c4a0e8'}} onClick={()=>setActiveTab('extensions')}>Review →</button>
+          </div>
+        )}
+
+        {/* Tabs */}
+        <div style={{display:'flex',gap:8,marginBottom:'1rem',flexWrap:'wrap'}}>
+          {[['all','All Customers'],['today',"📅 Today's Collections"],['extensions',`🔔 Extensions${pendingExtCount>0?` (${pendingExtCount})`:''}`]].map(([t,l])=>(
+            <button key={t} className="ptab" onClick={()=>setActiveTab(t)} style={{flex:'none',padding:'7px 18px',background:activeTab===t?'var(--bgi)':'transparent',color:activeTab===t?'var(--ti)':'var(--t2)'}}>
+              {l}
+            </button>
+          ))}
+          <button type="button" className="psmbtn" onClick={()=>window.open('http://localhost:3000','_blank')} style={{background:'linear-gradient(135deg,#2563eb,#7c3aed)',color:'#fff',border:'none',padding:'7px 18px',minWidth:120}}>
+            Balance
+          </button>
+          <div style={{flex:1}}/>
+          <button className="pbtn pbtn-gold" onClick={()=>setView('addLoan')} style={{width:'auto',padding:'7px 18px',fontSize:13}}>+ Add Loan</button>
+        </div>
+
+        {activeTab==='today'&&<TodayCollections customers={customers}/>}
+
+        {activeTab==='extensions'&&(
+          <>
+            <ExtensionRequests customers={customers} onApprove={approveExtension} onReject={rejectExtension}/>
+            {pendingExtCount===0&&<div className="pcard" style={{textAlign:'center',padding:'2rem',color:'var(--t2)',fontSize:14}}>No pending extension requests.</div>}
+          </>
+        )}
+
+        {activeTab==='all'&&(
+          <>
+            <input className="pi" value={search} onChange={e=>setSearch(e.target.value)} placeholder="🔍  Search by name or phone..." style={{marginBottom:'1rem'}}/>
+            {filtered.length===0?(
+              <div className="pcard" style={{textAlign:'center',padding:'2.5rem',color:'var(--t2)',fontSize:14}}>No customers yet. Click "+ Add Loan" to get started.</div>
+            ):filtered.map(c=>(
+              <div key={c.id} className="pcard" style={{marginBottom:10}}>
+                <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',marginBottom:8}}>
+                  <div>
+                    <div style={{fontWeight:600,fontSize:15}}>{c.name}</div>
+                    <div style={{fontSize:12,color:'var(--t2)',marginTop:2}}>📞 {c.phone}{c.address?` · ${c.address}`:''}</div>
+                  </div>
+                  <div style={{display:'flex',gap:6}}>
+                    <button className="psmbtn" onClick={()=>setEditingCust(c)}>✏ Edit</button>
+                    <button className="pdelbtn" onClick={()=>deleteCust(c.id)}>Delete</button>
+                  </div>
+                </div>
+                {(c.loans||[]).length===0?<div style={{fontSize:12,color:'var(--t3)',padding:'6px 0'}}>No loans yet.</div>
+                :(c.loans||[]).map(loan=>{
+                  const tm=getTotalMonths(loan);
+                  const pc=(loan.payments||[]).filter(Boolean).length;
+                  const mi=+(loan.principal*RATE).toFixed(2);
+                  const inst=loan.type==='daily'?calcDaily(loan.principal,loan.duration).daily:mi;
+                  const done=pc>=tm;
+                  const hasPendExt=hasPendingExtension(loan);
+                  const hasExt=(loan.extensions||[]).length>0;
+                  return(
+                    <div key={loan.id} className="prow" onClick={()=>{setSelLoan({...loan,customerName:c.name,customerId:c.id});setView('loan');}}>
+                      <div>
+                        <div style={{fontSize:13,fontWeight:500}}>
+                          ₹{loan.principal.toLocaleString()} — {loan.type==='daily'?`Daily (${loan.duration}d)`:`Monthly (${tm}m)`}
+                          {loan.collateral?' 🔒':''}
+                          {hasExt&&<span style={{color:'#6B21A8',marginLeft:4}}>🔄</span>}
+                          {hasPendExt&&<span style={{color:'#854f0b',marginLeft:4}}>⏳ Ext.Request</span>}
+                        </div>
+                        <div style={{fontSize:11,color:'var(--t2)',marginTop:2}}>
+                          {loan.type==='daily'?`₹${inst}/day`:`₹${inst}/mo interest · Principal at end`} · {pc}/{tm} paid · Start: {loan.startDate}
+                        </div>
+                      </div>
+                      <div style={{display:'flex',alignItems:'center',gap:8}}>
+                        <Badge color={done?'green':hasPendExt?'amber':pc===0?'gray':'blue'}>{done?'Done':hasPendExt?'Ext.Req':`${pc}/${tm}`}</Badge>
+                        <span style={{fontSize:12,color:'var(--t3)'}}>→</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ── CUSTOMER VIEW ── */
+function CustomerView({user,customers,setCustomers,onLogout}){
+  const[view,setView]=useState('home');
+  const[selLoan,setSelLoan]=useState(null);
+  const customer=customers.find(c=>c.id===user.id);
+
+  if(!customer)return(
+    <div style={{textAlign:'center',padding:'4rem',color:'var(--t2)',fontSize:14}}>
+      Account not found. Please contact the owner.<br/>
+      <button className="pbtn" onClick={onLogout} style={{marginTop:16,width:'auto',padding:'8px 20px'}}>Logout</button>
+    </div>
+  );
+
+  async function requestExtension(loanId,reason){
+    const updated=customers.map(c=>{
+      if(c.id!==customer.id)return c;
+      return{...c,loans:(c.loans||[]).map(l=>l.id!==loanId?l:{
+        ...l,
+        extensionRequest:{status:'pending',requestedDate:TODAY,reason}
+      })};
+    });
+    await setCustomers(updated);
+    // Update selLoan
+    const ul=updated.flatMap(c=>(c.loans||[]).map(l=>({...l,customerName:c.name,customerId:c.id}))).find(l=>l.id===selLoan?.id);
+    if(ul)setSelLoan(ul);
+  }
+
+  if(view==='loan'&&selLoan){
+    // Get freshest loan from state
+    const freshCustomer=customers.find(c=>c.id===user.id);
+    const freshLoan=freshCustomer?.loans.find(l=>l.id===selLoan.id);
+    const displayLoan=freshLoan?{...freshLoan,customerName:customer.name,customerId:customer.id}:selLoan;
+    return<PaymentTable
+      loan={displayLoan} isOwner={false} customerData={customer}
+      onTogglePaid={()=>{}}
+      onRequestExtension={requestExtension}
+      onClose={()=>{setView('home');setSelLoan(null);}}
+    />;
+  }
+
+  const loans=customer.loans||[];
+  const totalP=loans.reduce((s,l)=>s+l.principal,0);
+  const nextDue=[];
+  loans.forEach(l=>{const sch=genSchedule(l);const n=sch.find(r=>!r.paid);if(n)nextDue.push({loan:l,row:n});});
+
+  return(
+    <div style={{minHeight:'100vh',background:'var(--bg3)'}}>
+      <div style={{background:'var(--bg1)',borderBottom:'0.5px solid var(--b3)',padding:'12px 20px',display:'flex',alignItems:'center',justifyContent:'space-between',position:'sticky',top:0,zIndex:10}}>
+        <div>
+          <div style={{fontWeight:600,fontSize:15}}>Soliamman Finance</div>
+          <div style={{fontSize:12,color:'var(--t2)'}}>Welcome, {customer.name}</div>
+        </div>
+        <div style={{display:'flex',gap:8}}>
+          <button onClick={showWebsite} className="psmbtn">← Website</button>
+          <button onClick={()=>{clearSession();onLogout();}} className="psmbtn" style={{background:'var(--bgd)',color:'var(--td)'}}>🚪 Logout</button>
+        </div>
+      </div>
+
+      <div style={{maxWidth:640,margin:'0 auto',padding:'1.25rem 16px'}}>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(120px,1fr))',gap:8,marginBottom:'1.25rem'}}>
+          {[['Loans',loans.length],['Borrowed',`₹${totalP.toLocaleString()}`],['Next Due',nextDue.length?`₹${nextDue[0].row.amount}`:'—']].map(([l,v])=>(
+            <div key={l} className="pmet"><div style={{fontSize:11,color:'var(--t2)',marginBottom:2}}>{l}</div><div style={{fontWeight:600,fontSize:18}}>{v}</div></div>
+          ))}
+        </div>
+
+        {nextDue.length>0&&(
+          <div style={{background:'var(--bgw)',border:'0.5px solid #e8c97a',borderRadius:8,padding:'10px 14px',marginBottom:'1rem',fontSize:13}}>
+            ⏰ <strong>Next payment due:</strong> {nextDue.map(x=>`₹${x.row.amount} on ${x.row.dueDate}`).join(' · ')}
+          </div>
+        )}
+
+        {loans.length===0?(
+          <div className="pcard" style={{textAlign:'center',padding:'2.5rem',color:'var(--t2)',fontSize:14}}>No active loans. Contact Soliamman Finance to apply.</div>
+        ):loans.map(loan=>{
+          const tm=getTotalMonths(loan);
+          const pc=(loan.payments||[]).filter(Boolean).length;
+          const mi=+(loan.principal*RATE).toFixed(2);
+          const inst=loan.type==='daily'?calcDaily(loan.principal,loan.duration).daily:mi;
+          const done=pc>=tm;
+          const pct=Math.round((pc/tm)*100);
+          const remaining=+(schedule_remaining(loan)).toFixed(0);
+          const hasExt=(loan.extensions||[]).length>0;
+          const pendingExt=hasPendingExtension(loan);
+          const needsExt2=loanNeedsExtension(loan);
+
+          return(
+            <div key={loan.id} className="pcard" style={{marginBottom:12}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:10}}>
+                <div>
+                  <div style={{fontWeight:600,fontSize:15}}>₹{loan.principal.toLocaleString()} Loan</div>
+                  <div style={{fontSize:12,color:'var(--t2)',marginTop:2}}>
+                    {loan.type==='daily'?'Daily repayment':'Monthly · Interest Only'} · Started {loan.startDate}
+                    {loan.collateral?<span style={{color:'var(--tw)'}}> · 🔒 Secured</span>:''}
+                    {hasExt&&<span style={{color:'#6B21A8'}}> · Extended</span>}
+                  </div>
+                </div>
+                <Badge color={done?'green':pendingExt?'amber':needsExt2?'purple':'blue'}>{done?'Completed':pendingExt?'Ext. Requested':needsExt2?'Principal Due':'Active'}</Badge>
+              </div>
+
+              {pendingExt&&(
+                <div style={{background:'#f0e8fb',border:'0.5px solid #c4a0e8',borderRadius:6,padding:'8px 12px',marginBottom:8,fontSize:12,color:'#6B21A8'}}>
+                  ⏳ Extension request pending owner approval.
+                </div>
+              )}
+
+              <div style={{background:'var(--bg2)',borderRadius:8,padding:'10px 12px',marginBottom:10}}>
+                <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:8,marginBottom:10}}>
+                  {loan.type==='monthly'?[
+                    ['Monthly Interest',`₹${mi}`],
+                    ['Paid',`${pc}/${tm}`],
+                    ['Remaining',`₹${remaining}`],
+                  ]:[
+                    ['Daily Install',`₹${inst}`],
+                    ['Paid',`${pc}/${tm}`],
+                    ['Remaining',`₹${remaining}`],
+                  ].map(([l,v])=>(
+                    <div key={l}><div style={{fontSize:11,color:'var(--t3)'}}>{l}</div><div style={{fontWeight:600,fontSize:14}}>{v}</div></div>
+                  ))}
+                </div>
+                <div style={{height:7,background:'var(--b3)',borderRadius:99,overflow:'hidden'}}>
+                  <div style={{height:'100%',width:`${pct}%`,background:done?'#3b6d11':pendingExt?'#6B21A8':'#378ADD',borderRadius:99,transition:'width 0.5s'}}/>
+                </div>
+                <div style={{fontSize:11,color:'var(--t3)',marginTop:4}}>{pct}% paid</div>
+              </div>
+
+              <button className="pbtn" onClick={()=>{setSelLoan({...loan,customerName:customer.name,customerId:customer.id});setView('loan');}}>
+                View Payment Schedule →{needsExt2&&!pendingExt?' (Extension Available)':''}
+              </button>
+            </div>
+          );
+        })}
+
+        <div style={{marginTop:'1.5rem',textAlign:'center',fontSize:12,color:'var(--t3)',lineHeight:1.8}}>
+          Soliamman Finance<br/>
+          Muthur Main Road, Nanjai Uthukuli, Erode – 638104<br/>
+          📞 9976099982 / 9976099993
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function schedule_remaining(loan){
+  const sch=genSchedule(loan);
+  return sch.filter(x=>!x.paid).reduce((s,x)=>s+x.amount,0);
+}
+
+/* ── CLOUD STATUS BADGE ── */
+function CloudBadge({status}){
+  const cfg={
+    ok:    {bg:'#EAF3DE',c:'#3B6D11',label:'☁ Cloud Saved'},
+    error: {bg:'#FCEBEB',c:'#A32D2D',label:'⚠ Local Only (Check API Key)'},
+    saving:{bg:'#E6F1FB',c:'#185FA5',label:'↻ Saving to Cloud…'},
+    idle:  {bg:'#F1EFE8',c:'#5F5E5A',label:'☁ ImageKit Cloud'},
+  };
+  const s=cfg[status]||cfg.idle;
+  return(
+    <span title="Storage: ik.imagekit.io/doyivizek" style={{background:s.bg,color:s.c,fontSize:11,padding:'3px 10px',borderRadius:20,fontWeight:500}}>
+      {s.label}
+    </span>
+  );
+}
+
+/* ── APP ── */
+function App(){
+  const[user,setUser]=useState(null);
+  const[customers,setCustomers]=useState([]);
+  const[loading,setLoading]=useState(true);
+  const[cloudStatus,setCloudStatus]=useState('idle');
+
+  async function saveCustomers(data){
+    setCustomers(data);
+    setCloudStatus('saving');
+    const ok = await saveData(data);
+    setCloudStatus(ok?'ok':'error');
+    setTimeout(()=>setCloudStatus('idle'),3500);
+  }
+
+  useEffect(()=>{
+    const session=getSession();
+    loadData().then(d=>{
+      setCustomers(d);
+      setLoading(false);
+      if(session){
+        if(session.role==='customer'){
+          const c=d.find(cust=>cust.id===session.id);
+          if(c)setUser(session); else clearSession();
+        }else if(session.role==='owner'){
+          setUser(session);
+        }
+      }
+    });
+  },[]);
+
+  if(loading)return(
+    <div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--t2)',fontSize:14,flexDirection:'column',gap:12}}>
+      <div style={{fontSize:28}}>☁</div>
+      <div style={{fontWeight:500}}>Loading Soliamman Finance…</div>
+      <div style={{fontSize:12,color:'var(--t3)'}}>Fetching from ImageKit Cloud</div>
+    </div>
+  );
+
+  if(!user)return<LoginPage onLogin={setUser} customers={customers}/>;
+  if(user.role==='owner')return<OwnerDashboard user={user} customers={customers} setCustomers={saveCustomers} onLogout={()=>{clearSession();setUser(null);}} cloudStatus={cloudStatus} CloudBadge={CloudBadge}/>;
+  return<CustomerView user={user} customers={customers} setCustomers={saveCustomers} onLogout={()=>{clearSession();setUser(null);}}/>;
+}
+
+ReactDOM.createRoot(document.getElementById('portal-root')).render(<App/>);
+</script>
+</body>
+</html>
